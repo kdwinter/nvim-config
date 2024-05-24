@@ -157,9 +157,6 @@ require("lazy").setup({
         end
     },
 
-    "vim-ruby/vim-ruby",
-    "tpope/vim-rails",
-
     "tpope/vim-repeat",
 
     "vimwiki/vimwiki",
@@ -231,7 +228,20 @@ require("lazy").setup({
                 })
             end
         end
-    }
+    },
+
+    "vim-ruby/vim-ruby",
+    "tpope/vim-rails",
+    "tpope/vim-haml",
+    "tpope/vim-markdown",
+    "pangloss/vim-javascript",
+    "mxw/vim-jsx",
+    "posva/vim-vue",
+    "leafgarland/typescript-vim",
+    "rust-lang/rust.vim",
+    "elixir-tools/elixir-tools.nvim",
+    "rhysd/vim-crystal",
+    "cespare/vim-toml"
 })
 
 -- open vimwiki links in a new vim buffer instead of xdg-open

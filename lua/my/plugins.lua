@@ -4,14 +4,15 @@
 
 -- vimwiki
 if vim.fn.hostname() == "kheshatta" then
-    vim.g.vimwiki_list = {{ path = "/home/gig/wiki" }}
+    vim.g.vimwiki_list = { { path = "/home/gig/wiki" } }
 elseif vim.fn.hostname() == "sanctuary" then
-    vim.g.vimwiki_list = {{ path = "/storage/wiki" }}
+    vim.g.vimwiki_list = { { path = "/storage/wiki" } }
 end
 
 -- remove docx and xlsx from zip.vim
 vim.g.zipPlugin_ext = "*.zip,*.jar,*.xpi,*.ja,*.war,*.ear,*.celzip,*.oxt,*.kmz,*.wsz,*.xap,*.docm,*.dotx,*.dotm,*.potx,*.potm,*.ppsx,*.ppsm,*.pptx,*.pptm,*.ppam,*.sldx,*.thmx,*.xlam,*.xlsm,*.xlsb,*.xltx,*.xltm,*.xlam,*.crtx,*.vdw,*.glox,*.gcsx,*.gqsx"
 
+-- lazy load plugins from github
 require("lazy").setup({
     "nvim-lua/plenary.nvim",
 
@@ -42,16 +43,15 @@ require("lazy").setup({
 
     "tpope/vim-endwise",
 
-    { "nvim-tree/nvim-web-devicons", config = function() require("nvim-web-devicons").setup() end },
+    { "nvim-tree/nvim-web-devicons", main = "nvim-web-devicons", opts = {} },
 
     {
         "akinsho/bufferline.nvim",
         dependencies = {
             "nvim-tree/nvim-web-devicons"
         },
-        config = function()
-            require("bufferline").setup({})
-        end
+        main = "bufferline",
+        opts = {}
     },
 
     --{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
@@ -80,9 +80,9 @@ require("lazy").setup({
 
     "APZelos/blamer.nvim",
 
-    { "lewis6991/gitsigns.nvim", config = function() require("gitsigns").setup() end },
+    { "lewis6991/gitsigns.nvim", main = "gitsigns", opts = {} },
 
-    { "windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup({}) end },
+    { "windwp/nvim-autopairs", main = "nvim-autopairs", opts = {} },
 
     {
         "brenoprata10/nvim-highlight-colors",
@@ -128,7 +128,11 @@ require("lazy").setup({
 
     {
         "hrsh7th/nvim-cmp",
-        dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer", "hrsh7th/cmp-path" },
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path"
+        },
         config = function()
             local cmp = require("cmp")
             cmp.setup({
@@ -157,10 +161,10 @@ require("lazy").setup({
                     { name = "nvim_lsp", keyword_length = 1 },
                     { name = "buffer", keyword_length = 2 },
                     { name = "path" },
-                    -- { name = "vsnip" }, -- For vsnip users.
-                    -- { name = "luasnip" }, -- For luasnip users.
-                    -- { name = "ultisnips" }, -- For ultisnips users.
-                    -- { name = "snippy" }, -- For snippy users.
+                    --{ name = "vsnip" }, -- For vsnip users.
+                    --{ name = "luasnip" }, -- For luasnip users.
+                    --{ name = "ultisnips" }, -- For ultisnips users.
+                    --{ name = "snippy" }, -- For snippy users.
                 }
             })
         end
@@ -168,7 +172,10 @@ require("lazy").setup({
 
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "hrsh7th/cmp-nvim-lsp", "SmiteshP/nvim-navic" },
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "SmiteshP/nvim-navic"
+        },
         config = function()
             local navic = require("nvim-navic")
 
@@ -181,7 +188,8 @@ require("lazy").setup({
                 end
             end
 
-            local servers = { "ruby_lsp", "gopls", "rust_analyzer", "bashls", "pyright", "ccls", "tsserver", "cssls", "lua_ls" }
+            local servers = require("my").lsp_servers
+
             local nvim_lsp = require("lspconfig")
             for _, lsp in ipairs(servers) do
                 nvim_lsp[lsp].setup({
@@ -195,6 +203,7 @@ require("lazy").setup({
         end
     },
 
+    -- language stuff
     "vim-ruby/vim-ruby",
     "tpope/vim-rails",
     "tpope/vim-haml",

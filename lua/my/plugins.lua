@@ -9,6 +9,8 @@ elseif vim.fn.hostname() == "sanctuary" then
     vim.g.vimwiki_list = { { path = "/storage/wiki" } }
 end
 
+vim.g.blamer_date_format = "%Y-%m-%d"
+
 -- remove docx and xlsx from zip.vim
 vim.g.zipPlugin_ext = "*.zip,*.jar,*.xpi,*.ja,*.war,*.ear,*.celzip,*.oxt,*.kmz,*.wsz,*.xap,*.docm,*.dotx,*.dotm,*.potx,*.potm,*.ppsx,*.ppsm,*.pptx,*.pptm,*.ppam,*.sldx,*.thmx,*.xlam,*.xlsm,*.xlsb,*.xltx,*.xltm,*.xlam,*.crtx,*.vdw,*.glox,*.gcsx,*.gqsx"
 
@@ -78,7 +80,7 @@ require("lazy").setup({
         end
     },
 
-    "APZelos/blamer.nvim",
+    { "APZelos/blamer.nvim", keys = { { "<C-b>", "<cmd>BlamerToggle<CR>" } } },
 
     { "lewis6991/gitsigns.nvim", main = "gitsigns", opts = {} },
 
@@ -128,6 +130,7 @@ require("lazy").setup({
 
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -175,6 +178,9 @@ require("lazy").setup({
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "SmiteshP/nvim-navic"
+        },
+        keys = {
+            { "<leader>l", "<cmd>LspInfo<CR>" }
         },
         config = function()
             local navic = require("nvim-navic")

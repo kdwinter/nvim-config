@@ -1,12 +1,9 @@
 -----------------------------------------------------------------------------
 -- KEYBINDS
 -----------------------------------------------------------------------------
+local remapkey = require("my").remapkey
 
 vim.g.mapleader = ","
-
-function remapkey(mode, key, action)
-    vim.keymap.set(mode, key, action, { noremap = true, silent = true })
-end
 
 -- common save shortcuts
 remapkey("i", "<C-s>", "<Esc>:w<CR>a")
@@ -14,7 +11,7 @@ remapkey("n", "<C-s>", ":w<CR>")
 
 -- terminal shortcuts
 remapkey("i", "<C-t>", "<Esc>:term<CR>A")
-remapkey("n", "<C-t", ":term<CR>A")
+remapkey("n", "<C-t>", ":term<CR>A")
 
 -- sane movement with wrap o n
 remapkey({"n", "v"}, "j", "gj")
@@ -28,7 +25,7 @@ remapkey("i", "<Up>", "<C-o>gk")
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 
--- visually select the characters that are wanted in the search, then type // to search for the next occurrence of the selected text
+-- visually select the characters that are wanted in a search, then type // to search for the next occurrence of the selected text
 remapkey("v", "//", "y/\\V<C-R>=escape(@\",'/\\')<CR><CR>")
 
 -- no ex mode
@@ -38,13 +35,7 @@ remapkey("n", "Q", "<Nop>")
 remapkey("n", "cc", ":center<CR>")
 
 -- write to files with root privileges
-vim.keymap.set("c", "w!!", ":w !sudo tee % >/dev/null")
-
--- blamer
-vim.keymap.set("", "<C-b>", ":BlamerToggle<CR>")
-
--- quickly show lsp info
-remapkey("n", "<leader>l", "<cmd>LspInfo<CR>")
+vim.keymap.set("c", "w!!", ":w !doas tee % >/dev/null")
 
 -- typo's
 vim.keymap.set("i", "<F1>", "<Esc>")
@@ -54,6 +45,7 @@ vim.cmd [[
     ia htese these
     ia od do
     ia nothign nothing
+    ia nohting nothing
     ia htey they
     ia htem them
     ia iwth with
@@ -82,4 +74,6 @@ vim.cmd [[
     ia orgniaztion organization
     ia orgnization organization
     ia shcool school
+    ia htough though
+    ia thouhg though
 ]]

@@ -11,7 +11,7 @@ local lsp = augroup("lsp", {})
 -- shortly highlight yanks
 au("TextYankPost", {
     group = ag, pattern = "*", callback = function()
-        vim.highlight.on_yank { higroup="IncSearch", timeout = 250, on_visual = true }
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 250, on_visual = true })
     end
 })
 
@@ -149,8 +149,10 @@ au("FileType", {
 
 -- ms word doc reading
 au("BufReadPre", { group = ft, pattern = "*.doc{x,}", callback = function() vim.opt_local.readonly = true end })
-vim.cmd [[au BufReadPost *.doc %!antiword "%"]]
-vim.cmd [[au BufReadPost *.docx %!docx2txt "%" -]]
+vim.cmd [[
+    au BufReadPost *.doc %!antiword "%"
+    au BufReadPost *.docx %!docx2txt "%" -
+]]
 
 -- filetype detections
 au({"BufNewFile", "BufRead"}, { group = ft, pattern = "*.ru", callback = function() vim.opt_local.filetype = "ruby" end })
@@ -203,27 +205,26 @@ au("LspAttach", {
     callback = function(args)
         --local bufnr = args.buf
         --local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
+        local remapkey = require("my").remapkey
 
         vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        local opts = { noremap = true, silent = true }
-
-        vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-        vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-        vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-        vim.keymap.set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-        vim.keymap.set("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-        vim.keymap.set("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-        vim.keymap.set("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-        vim.keymap.set("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-        vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-        vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-        vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-        vim.keymap.set("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-        vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-        vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-        vim.keymap.set("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-        vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        remapkey("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+        remapkey("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+        remapkey("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+        remapkey("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+        remapkey("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+        remapkey("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
+        remapkey("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
+        remapkey("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
+        remapkey("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+        remapkey("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+        remapkey("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+        remapkey("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+        remapkey("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>")
+        remapkey("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+        remapkey("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+        remapkey("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+        remapkey("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
     end
 })

@@ -23,4 +23,8 @@ M.lsp_servers = {
     "lua_ls"
 }
 
+M.remapkey = function(mode, key, action)
+    vim.keymap.set(mode, key, action, { noremap = true, silent = true })
+end
+
 return M

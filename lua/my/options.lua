@@ -46,9 +46,9 @@ vim.opt.ruler = true -- ruler display in statusline
 vim.opt.showmode = true -- show mode at bottom of screen
 vim.opt.backup = false -- don't keep backups after close
 vim.opt.writebackup = true -- do keep one while working
-vim.opt.backupdir = "/tmp"
+vim.opt.backupdir = os.getenv("HOME") .. "/.vim/backup/,/tmp"
 vim.opt.backupcopy = "yes"
-vim.opt.directory = "/tmp"
+vim.opt.directory = os.getenv("HOME") .. "/.vim/backup/,/tmp"
 vim.opt.showmatch = true -- show matching brackets (), {}, []
 vim.opt.whichwrap = "h,l,<,>,[,]"
 vim.opt.showcmd = true
@@ -75,3 +75,4 @@ vim.opt.cursorline = true
 vim.opt.omnifunc = "syntaxcomplete#Complete"
 vim.opt.laststatus = 2 -- always show statusline
 vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.listchars:append({ trail = "·", precedes = "«", extends = "»", eol = "↲", tab = "▸\\ " })

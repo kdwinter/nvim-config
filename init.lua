@@ -11,7 +11,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local my = require("my")
+local _ = require("my")
 require("my.options")
 require("my.keybinds")
 require("my.autocmd")

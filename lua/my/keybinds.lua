@@ -13,7 +13,7 @@ remapkey("n", "<C-s>", ":w<CR>")
 remapkey("i", "<C-t>", "<Esc>:term<CR>A")
 remapkey("n", "<C-t>", ":term<CR>A")
 
--- sane movement with wrap o n
+-- sane movement with wrap on
 remapkey({"n", "v"}, "j", "gj")
 remapkey({"n", "v"}, "k", "gk")
 remapkey({"n", "v"}, "<Down>", "gj")

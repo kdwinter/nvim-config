@@ -6,6 +6,7 @@ local augroup = vim.api.nvim_create_augroup
 local ag = augroup("default", {})
 local ft = augroup("filetypes", {})
 local lsp = augroup("lsp", {})
+local remapkey = require("my").remapkey
 
 -- shortly highlight yanks
 au("TextYankPost", {
@@ -204,7 +205,6 @@ au("LspAttach", {
     callback = function(args)
         --local bufnr = args.buf
         --local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
-        local remapkey = require("my").remapkey
 
         vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 

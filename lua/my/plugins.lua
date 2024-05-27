@@ -56,7 +56,18 @@ require("lazy").setup({
         opts = {}
     },
 
-    --{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            local highlight = { "IndentLine" }
+            local hooks = require("ibl.hooks")
+            hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+                vim.api.nvim_set_hl(0, "IndentLine", { fg = "#333333" })
+            end)
+
+            require("ibl").setup({ indent = { highlight = highlight } })
+        end
+    },
 
     {
         "nvim-telescope/telescope.nvim",
@@ -73,7 +84,7 @@ require("lazy").setup({
             require("telescope").setup({
                 pickers = {
                     find_files = {
-                        theme = "dropdown"
+                        theme = "ivy" -- dropdown
                     }
                 }
             })
@@ -92,7 +103,7 @@ require("lazy").setup({
             require("nvim-highlight-colors").setup({
                 render = "virtual",
                 virtual_symbol = "■",
-                enable_named_colors = true,
+                enable_named_colors = false,
                 enable_tailwind = false
             })
         end
@@ -124,6 +135,8 @@ require("lazy").setup({
         end
     },
 
+    { "j-hui/fidget.nvim", main = "fidget", opts = {} },
+
     "tpope/vim-repeat",
 
     "vimwiki/vimwiki",
@@ -153,10 +166,7 @@ require("lazy").setup({
                     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
                     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
                     ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-                    ["<C-e>"] = cmp.mapping({
-                        i = cmp.mapping.abort(),
-                        c = cmp.mapping.close(),
-                    }),
+                    ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
                     ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
                     ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" })
                 },
@@ -183,11 +193,10 @@ require("lazy").setup({
             { "<leader>l", "<cmd>LspInfo<CR>" }
         },
         config = function()
-            local navic = require("nvim-navic")
-
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+            local navic = require("nvim-navic")
             local on_attach = function(client, bufnr)
                 if client.server_capabilities.documentSymbolProvider then
                     navic.attach(client, bufnr)
@@ -195,7 +204,6 @@ require("lazy").setup({
             end
 
             local servers = require("my").lsp_servers
-
             local nvim_lsp = require("lspconfig")
             for _, lsp in ipairs(servers) do
                 nvim_lsp[lsp].setup({

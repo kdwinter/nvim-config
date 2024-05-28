@@ -123,9 +123,9 @@ require("lazy").setup({
             "nvim-tree/nvim-web-devicons"
         },
         config = function()
-            local lsp_clients = function ()
+            local lsp_clients = function()
                 local bufnr = vim.api.nvim_get_current_buf()
-                local clients = vim.lsp.buf_get_clients(bufnr)
+                local clients = vim.lsp.get_clients({ bufnr = bufnr })
                 if next(clients) == nil then
                     return ""
                 end
@@ -140,7 +140,9 @@ require("lazy").setup({
             require("lualine").setup({
                 options = {
                     --theme = "codedark"
-                    theme = "vscode"
+                    theme = "vscode",
+                    section_separators = "",
+                    component_separators = ""
                 },
                 sections = {
                     lualine_x = { lsp_clients, "encoding", "fileformat", "filetype" },

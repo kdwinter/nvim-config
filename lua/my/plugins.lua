@@ -235,6 +235,16 @@ require("lazy").setup({
         end
     },
 
+    {
+        "utilyre/barbecue.nvim",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons"
+        },
+        main = "barbecue",
+        opts = {}
+    },
+
     -- language stuff
     "vim-ruby/vim-ruby",
     "tpope/vim-rails",

@@ -62,7 +62,8 @@ require("lazy").setup({
             local highlight = { "IndentLine" }
             local hooks = require("ibl.hooks")
             hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-                vim.api.nvim_set_hl(0, "IndentLine", { fg = "#333333" })
+                local fg = (vim.o.background == "dark" and "#333333" or "#dddddd")
+                vim.api.nvim_set_hl(0, "IndentLine", { fg = fg })
             end)
 
             require("ibl").setup({ indent = { highlight = highlight } })

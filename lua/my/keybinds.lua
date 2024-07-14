@@ -21,6 +21,9 @@ remapkey({"n", "v"}, "<Up>", "gk")
 remapkey("i", "<Down>", "<C-o>gj")
 remapkey("i", "<Up>", "<C-o>gk")
 
+-- mark position before search
+remapkey("n", "/", "ms/")
+
 -- tab key in visual mode
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")

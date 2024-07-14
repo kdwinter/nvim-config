@@ -167,6 +167,15 @@ au({"BufNewFile", "BufRead"}, { group = ft, pattern = "*.tpl", callback = functi
 au({"BufNewFile", "BufRead"}, { group = ft, pattern = ".spacemacs", callback = function() vim.opt_local.filetype = "lisp" end })
 au({"BufNewFile", "BufRead"}, { group = ft, pattern = "COMMIT_EDITMSG", callback = function() vim.opt_local.filetype = "git" end })
 
+-- ruby debugging stuff
+au("FileType", {
+    group = ft,
+    pattern = "ruby",
+    callback = function()
+        remapkey("n", "<leader>wtf", [[oputs "#" * 90<c-m>puts caller<c-m>puts "#" * 90<ESC>]])
+    end
+})
+
 ---- load additional plugins based on filetype
 --au("BufReadPre", { group = ft, pattern = "*.js", callback = function() vim.cmd("packadd vim-javascript") end })
 --au("BufReadPre", { group = ft, pattern = "*.es6", callback = function() vim.cmd("packadd vim-javascript") end })

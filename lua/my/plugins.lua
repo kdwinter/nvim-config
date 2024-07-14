@@ -63,6 +63,7 @@ require("lazy").setup({
             local hooks = require("ibl.hooks")
             hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
                 local fg = (vim.o.background == "dark" and "#333333" or "#dddddd")
+                --local fg = (vim.o.background == "dark" and "#21364f" or "#dddddd")
                 vim.api.nvim_set_hl(0, "IndentLine", { fg = fg })
             end)
 
@@ -117,6 +118,13 @@ require("lazy").setup({
             vim.cmd("colorscheme vscode")
         end
     },
+
+    --{
+    --    "echasnovski/mini.base16",
+    --    config = function()
+    --        vim.cmd("colorscheme minischeme")
+    --    end
+    --},
 
     {
         "nvim-lualine/lualine.nvim",
@@ -233,7 +241,8 @@ require("lazy").setup({
                     }
                 })
             end
-        end
+        end,
+        lazy = false
     },
 
     {
@@ -258,7 +267,9 @@ require("lazy").setup({
     "rust-lang/rust.vim",
     "elixir-tools/elixir-tools.nvim",
     "rhysd/vim-crystal",
-    "cespare/vim-toml"
+    "cespare/vim-toml",
+
+    "echasnovski/mini.base16"
 })
 
 -- open vimwiki links in a new vim buffer instead of xdg-open

@@ -14,6 +14,9 @@ vim.g.blamer_date_format = "%Y-%m-%d"
 -- remove docx and xlsx from zip.vim
 vim.g.zipPlugin_ext = "*.zip,*.jar,*.xpi,*.ja,*.war,*.ear,*.celzip,*.oxt,*.kmz,*.wsz,*.xap,*.docm,*.dotx,*.dotm,*.potx,*.potm,*.ppsx,*.ppsm,*.pptx,*.pptm,*.ppam,*.sldx,*.thmx,*.xlam,*.xlsm,*.xlsb,*.xltx,*.xltm,*.xlam,*.crtx,*.vdw,*.glox,*.gcsx,*.gqsx"
 
+-- colors
+vim.cmd.colorscheme("gruber")
+
 -- lazy load plugins from github
 require("lazy").setup({
     "nvim-lua/plenary.nvim",
@@ -62,7 +65,7 @@ require("lazy").setup({
             local highlight = { "IndentLine" }
             local hooks = require("ibl.hooks")
             hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-                local fg = (vim.o.background == "dark" and "#333333" or "#dddddd")
+                local fg = (vim.o.background == "dark" and "#202020" or "#dddddd")
                 --local fg = (vim.o.background == "dark" and "#21364f" or "#dddddd")
                 vim.api.nvim_set_hl(0, "IndentLine", { fg = fg })
             end)
@@ -111,18 +114,18 @@ require("lazy").setup({
         end
     },
 
-    {
-        "Mofiqul/vscode.nvim",
-        config = function()
-            require("vscode").setup({})
-            vim.cmd("colorscheme vscode")
-        end
-    },
+    --{
+    --    "Mofiqul/vscode.nvim",
+    --    config = function()
+    --        require("vscode").setup({})
+    --        vim.cmd.colorscheme("vscode")
+    --    end
+    --},
 
     --{
     --    "echasnovski/mini.base16",
     --    config = function()
-    --        vim.cmd("colorscheme minischeme")
+    --        vim.cmd.colorscheme("minischeme")
     --    end
     --},
 
@@ -149,7 +152,7 @@ require("lazy").setup({
             require("lualine").setup({
                 options = {
                     --theme = "codedark"
-                    theme = "vscode",
+                    --theme = "vscode",
                     section_separators = "",
                     component_separators = ""
                 },

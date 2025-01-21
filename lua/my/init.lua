@@ -18,7 +18,7 @@ M.lsp_servers = {
     "bashls",
     "pyright",
     "ccls",
-    "tsserver",
+    "ts_ls",
     "cssls",
     "lua_ls"
 }

@@ -15,7 +15,8 @@ vim.g.blamer_date_format = "%Y-%m-%d"
 vim.g.zipPlugin_ext = "*.zip,*.jar,*.xpi,*.ja,*.war,*.ear,*.celzip,*.oxt,*.kmz,*.wsz,*.xap,*.docm,*.dotx,*.dotm,*.potx,*.potm,*.ppsx,*.ppsm,*.pptx,*.pptm,*.ppam,*.sldx,*.thmx,*.xlam,*.xlsm,*.xlsb,*.xltx,*.xltm,*.xlam,*.crtx,*.vdw,*.glox,*.gcsx,*.gqsx"
 
 -- colors
-vim.cmd.colorscheme("gruber")
+--vim.cmd.colorscheme("gruber")
+vim.cmd.colorscheme("srcery")
 
 -- lazy load plugins from github
 require("lazy").setup({
@@ -256,6 +257,72 @@ require("lazy").setup({
         },
         main = "barbecue",
         opts = {}
+    },
+
+    {
+      "NeogitOrg/neogit",
+      dependencies = {
+          "nvim-lua/plenary.nvim",
+          "sindrets/diffview.nvim",
+          "nvim-telescope/telescope.nvim"
+      },
+      keys = {
+          { "<leader>g", function() require("neogit").open() end }
+      },
+      config = true
+    },
+
+    {
+        "yetone/avante.nvim",
+        event = "VeryLazy",
+        lazy = false,
+        version = false,
+        opts = {
+            provider = "openai",
+            auto_suggestions_provider = "openai",
+            openai = {
+                endpoint = "https://api.deepseek.com/v1",
+                model = "deepseek-chat",
+                timeout = 30000,
+                temperature = 0.0,
+                max_tokens = 4096,
+                api_key_name = "cmd:gpg -dq /home/gig/.deepseek.gpg",
+                -- api_key_name = "OPENAI_API_KEY", -- default OPENAI_API_KEY if not set
+            },
+            windows = {
+                position = "bottom"
+            }
+        },
+        build = "make",
+        dependencies = {
+            "stevearc/dressing.nvim",
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+            "nvim-tree/nvim-web-devicons",
+            -- "zbirenbaum/copilot.lua", -- for providers='copilot'
+            {
+                "HakonHarnes/img-clip.nvim",
+                event = "VeryLazy",
+                opts = {
+                    default = {
+                        embed_image_as_base64 = false,
+                        prompt_for_file_name = false,
+                        drag_and_drop = {
+                            insert_mode = true,
+                        },
+                        use_absolute_path = true,
+                    },
+                },
+            },
+            {
+                -- Make sure to set this up properly if you have lazy=true
+                "MeanderingProgrammer/render-markdown.nvim",
+                opts = {
+                    file_types = { "markdown", "Avante" },
+                },
+                ft = { "markdown", "Avante" },
+            },
+        },
     },
 
     -- language stuff

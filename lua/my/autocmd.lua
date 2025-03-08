@@ -132,6 +132,13 @@ au("FileType", {
     end
 })
 
+au("FileType", {
+    group = ft, pattern = "AvanteInput", callback = function()
+        vim.opt_local.wrap = false
+        vim.opt_local.textwidth = 200
+    end
+})
+
 -- compile and run keymaps
 au("FileType", { group = ft, pattern = "ruby", callback = function() vim.keymap.set("", "<F6>", ":!ruby %<CR>") end })
 au("FileType", { group = ft, pattern = "php", callback = function() vim.keymap.set("", "<F6>", ":!php -f %<CR>") end })

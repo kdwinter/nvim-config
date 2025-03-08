@@ -16,7 +16,8 @@ vim.g.zipPlugin_ext = "*.zip,*.jar,*.xpi,*.ja,*.war,*.ear,*.celzip,*.oxt,*.kmz,*
 
 -- colors
 --vim.cmd.colorscheme("gruber")
-vim.cmd.colorscheme("srcery")
+--vim.cmd.colorscheme("srcery")
+--vim.cmd.colorscheme("paper")
 
 -- lazy load plugins from github
 require("lazy").setup({
@@ -34,7 +35,7 @@ require("lazy").setup({
                 --ignore_install = { "javascript" }, -- list of parsers to ignore installing
                 highlight = {
                     enable = true, -- false will disable the whole extension
-                    disable = { }, -- list of language that will be disabled
+                    disable = {}, -- list of language that will be disabled
                 },
                 indent = {
                     enable = true,
@@ -74,6 +75,18 @@ require("lazy").setup({
             require("ibl").setup({ indent = { highlight = highlight } })
         end
     },
+
+    {
+        "karb94/neoscroll.nvim",
+        main = "neoscroll",
+        opts = {}
+    },
+
+    --{
+    --    "sphamba/smear-cursor.nvim",
+    --    main = "smear_cursor",
+    --    opts = {}
+    --},
 
     {
         "nvim-telescope/telescope.nvim",
@@ -123,10 +136,33 @@ require("lazy").setup({
     --    end
     --},
 
+    {
+        "savq/melange-nvim",
+        config = function()
+            vim.cmd.colorscheme("melange")
+        end
+    },
+
     --{
     --    "echasnovski/mini.base16",
     --    config = function()
     --        vim.cmd.colorscheme("minischeme")
+    --    end
+    --},
+
+    --{
+    --    "nuvic/flexoki-nvim",
+    --    config = function()
+    --        require("flexoki").setup({})
+    --        vim.cmd.colorscheme("flexoki")
+    --    end
+    --},
+
+    --{
+    --    "slugbyte/lackluster.nvim",
+    --    config = function()
+    --        require("lackluster").setup({})
+    --        vim.cmd.colorscheme("lackluster-hack")
     --    end
     --},
 
@@ -172,52 +208,82 @@ require("lazy").setup({
     "vimwiki/vimwiki",
 
     {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path"
+        "saghen/blink.cmp",
+        version = "*",
+        opts = {
+            keymap = {
+                preset = "super-tab"
+            },
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = "mono"
+            },
+            --enabled = function(ctx)
+            --    return ctx.mode ~= "cmdline"
+            --end,
+            cmdline = {
+                enabled = false
+            },
+            sources = {
+                default = { "lsp", "path", "snippets", "buffer" },
+            },
+            fuzzy = {
+                max_typos = function(keyword)
+                    return math.floor(#keyword / 0)
+                end
+            }
         },
-        config = function()
-            local cmp = require("cmp")
-            cmp.setup({
-                --snippet = {
-                --    -- REQUIRED - you must specify a snippet engine
-                --    expand = function(args)
-                --        --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-                --        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                --        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-                --        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-                --    end,
-                --},
-                mapping = {
-                    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-                    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-                    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-                    ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-                    ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-                    ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" })
-                },
-                sources = {
-                    { name = "nvim_lsp", keyword_length = 1 },
-                    { name = "buffer", keyword_length = 2 },
-                    { name = "path" },
-                    --{ name = "vsnip" }, -- For vsnip users.
-                    --{ name = "luasnip" }, -- For luasnip users.
-                    --{ name = "ultisnips" }, -- For ultisnips users.
-                    --{ name = "snippy" }, -- For snippy users.
-                }
-            })
-        end
+        opts_extend = { "sources.default" }
     },
+
+    --{
+    --    "hrsh7th/nvim-cmp",
+    --    event = "InsertEnter",
+    --    dependencies = {
+    --        "hrsh7th/cmp-nvim-lsp",
+    --        "hrsh7th/cmp-cmdline",
+    --        "hrsh7th/cmp-buffer",
+    --        "hrsh7th/cmp-path"
+    --    },
+    --    config = function()
+    --        local cmp = require("cmp")
+    --        cmp.setup({
+    --            --snippet = {
+    --            --    -- REQUIRED - you must specify a snippet engine
+    --            --    expand = function(args)
+    --            --        --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    --            --        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+    --            --        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    --            --        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+    --            --    end,
+    --            --},
+    --            mapping = {
+    --                ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+    --                ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+    --                ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    --                ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    --                ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
+    --                ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
+    --                ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" })
+    --            },
+    --            sources = {
+    --                { name = "nvim_lsp", keyword_length = 1 },
+    --                { name = "buffer", keyword_length = 2 },
+    --                { name = "path" },
+    --                --{ name = "vsnip" }, -- For vsnip users.
+    --                --{ name = "luasnip" }, -- For luasnip users.
+    --                --{ name = "ultisnips" }, -- For ultisnips users.
+    --                --{ name = "snippy" }, -- For snippy users.
+    --            }
+    --        })
+    --    end
+    --},
 
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
+            --"hrsh7th/cmp-nvim-lsp",
+            "saghen/blink.cmp",
             "SmiteshP/nvim-navic"
         },
         keys = {
@@ -225,7 +291,8 @@ require("lazy").setup({
         },
         config = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+            --capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+            capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
             local navic = require("nvim-navic")
             local on_attach = function(client, bufnr)
@@ -339,7 +406,7 @@ require("lazy").setup({
     "rhysd/vim-crystal",
     "cespare/vim-toml",
 
-    "echasnovski/mini.base16"
+    --"echasnovski/mini.base16"
 })
 
 -- open vimwiki links in a new vim buffer instead of xdg-open

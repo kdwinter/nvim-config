@@ -3,11 +3,11 @@
 -----------------------------------------------------------------------------
 
 -- vimwiki
-if vim.fn.hostname() == "kheshatta" then
-    vim.g.vimwiki_list = { { path = "/home/gig/wiki" } }
-elseif vim.fn.hostname() == "sanctuary" then
-    vim.g.vimwiki_list = { { path = "/storage/wiki" } }
-end
+--if vim.fn.hostname() == "kheshatta" then
+--    vim.g.vimwiki_list = { { path = "/home/gig/wiki" } }
+--elseif vim.fn.hostname() == "sanctuary" then
+--    vim.g.vimwiki_list = { { path = "/storage/wiki" } }
+--end
 
 vim.g.blamer_date_format = "%Y-%m-%d"
 
@@ -18,6 +18,16 @@ vim.g.zipPlugin_ext = "*.zip,*.jar,*.xpi,*.ja,*.war,*.ear,*.celzip,*.oxt,*.kmz,*
 --vim.cmd.colorscheme("gruber")
 --vim.cmd.colorscheme("srcery")
 --vim.cmd.colorscheme("paper")
+vim.cmd.colorscheme("miss-dracula")
+--vim.cmd.colorscheme("paper")
+--if vim.fn.hostname() == "sanctuary" then
+--    vim.cmd("let g:accent_colour = 'red'")
+--else
+--    vim.cmd("let g:accent_colour = 'blue'")
+--end
+----vim.cmd("let g:accent_darken = 1")
+--vim.cmd("let g:accent_no_bg = 1")
+--vim.cmd.colorscheme("accent")
 
 -- lazy load plugins from github
 require("lazy").setup({
@@ -61,26 +71,22 @@ require("lazy").setup({
         opts = {}
     },
 
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            local highlight = { "IndentLine" }
-            local hooks = require("ibl.hooks")
-            hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-                local fg = (vim.o.background == "dark" and "#202020" or "#dddddd")
-                --local fg = (vim.o.background == "dark" and "#21364f" or "#dddddd")
-                vim.api.nvim_set_hl(0, "IndentLine", { fg = fg })
-            end)
+    --{
+    --    "lukas-reineke/indent-blankline.nvim",
+    --    config = function()
+    --        local highlight = { "IndentLine" }
+    --        local hooks = require("ibl.hooks")
+    --        hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    --            local fg = (vim.o.background == "dark" and "#202020" or "#dddddd")
+    --            --local fg = (vim.o.background == "dark" and "#21364f" or "#dddddd")
+    --            vim.api.nvim_set_hl(0, "IndentLine", { fg = fg })
+    --        end)
 
-            require("ibl").setup({ indent = { highlight = highlight } })
-        end
-    },
+    --        require("ibl").setup({ indent = { highlight = highlight } })
+    --    end
+    --},
 
-    {
-        "karb94/neoscroll.nvim",
-        main = "neoscroll",
-        opts = {}
-    },
+    { "karb94/neoscroll.nvim", main = "neoscroll", opts = {} },
 
     --{
     --    "sphamba/smear-cursor.nvim",
@@ -110,7 +116,8 @@ require("lazy").setup({
         end
     },
 
-    { "APZelos/blamer.nvim", keys = { { "<C-b>", "<cmd>BlamerToggle<CR>" } } },
+    --{ "APZelos/blamer.nvim", keys = { { "<C-b>", "<cmd>BlamerToggle<CR>" } } },
+    "APZelos/blamer.nvim",
 
     { "lewis6991/gitsigns.nvim", main = "gitsigns", opts = {} },
 
@@ -136,33 +143,41 @@ require("lazy").setup({
     --    end
     --},
 
-    {
-        "savq/melange-nvim",
-        config = function()
-            vim.cmd.colorscheme("melange")
-        end
-    },
+    --{
+    --    "p00f/alabaster.nvim",
+    --    config = function()
+    --        vim.cmd.colorscheme("alabaster")
+    --    end
+    --},
+
+    --{
+    --    "savq/melange-nvim",
+    --    config = function()
+    --        vim.cmd.colorscheme("melange")
+    --    end
+    --},
+
+    --{
+    --    "vague-theme/vague.nvim",
+    --    config = function()
+    --        vim.cmd.colorscheme("vague")
+    --    end
+    --},
+
+    --{
+    --    "oonamo/ef-themes.nvim",
+    --    config = function()
+    --        --vim.cmd.colorscheme("ef-arbutus")
+    --        --vim.cmd.colorscheme("ef-summer")
+    --        --vim.cmd.colorscheme("ef-cherie")
+    --        vim.cmd.colorscheme("ef-rosa")
+    --    end
+    --},
 
     --{
     --    "echasnovski/mini.base16",
     --    config = function()
     --        vim.cmd.colorscheme("minischeme")
-    --    end
-    --},
-
-    --{
-    --    "nuvic/flexoki-nvim",
-    --    config = function()
-    --        require("flexoki").setup({})
-    --        vim.cmd.colorscheme("flexoki")
-    --    end
-    --},
-
-    --{
-    --    "slugbyte/lackluster.nvim",
-    --    config = function()
-    --        require("lackluster").setup({})
-    --        vim.cmd.colorscheme("lackluster-hack")
     --    end
     --},
 
@@ -190,12 +205,14 @@ require("lazy").setup({
                 options = {
                     --theme = "codedark"
                     --theme = "vscode",
+                    --theme = "melange",
+                    --theme = "alabaster",
                     section_separators = "",
                     component_separators = ""
                 },
                 sections = {
                     lualine_x = { lsp_clients, "encoding", "fileformat", "filetype" },
-                    lualine_y = {} -- "progress"
+                    lualine_y = { "progress" } -- "progress"
                 }
             })
         end
@@ -205,7 +222,30 @@ require("lazy").setup({
 
     "tpope/vim-repeat",
 
-    "vimwiki/vimwiki",
+    --"vimwiki/vimwiki",
+
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        opts = {},
+    },
+
+    {
+        "serenevoid/kiwi.nvim",
+        opts = {
+            {
+                name = "wiki",
+                path = vim.fn.hostname() == "kheshatta" and "/home/gig/wiki" or "/storage/wiki",
+            }
+        },
+        keys = {
+            { "<leader>ww", ":lua require(\"kiwi\").open_wiki_index()<cr>", desc = "Open Wiki index" },
+            { "T", ":lua require(\"kiwi\").todo.toggle()<cr>", desc = "Toggle Markdown Task" }
+        },
+        lazy = true
+    },
+
+    --"saghen/blink.indent",
 
     {
         "saghen/blink.cmp",
@@ -236,94 +276,52 @@ require("lazy").setup({
         opts_extend = { "sources.default" }
     },
 
-    --{
-    --    "hrsh7th/nvim-cmp",
-    --    event = "InsertEnter",
-    --    dependencies = {
-    --        "hrsh7th/cmp-nvim-lsp",
-    --        "hrsh7th/cmp-cmdline",
-    --        "hrsh7th/cmp-buffer",
-    --        "hrsh7th/cmp-path"
-    --    },
-    --    config = function()
-    --        local cmp = require("cmp")
-    --        cmp.setup({
-    --            --snippet = {
-    --            --    -- REQUIRED - you must specify a snippet engine
-    --            --    expand = function(args)
-    --            --        --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-    --            --        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-    --            --        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-    --            --        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-    --            --    end,
-    --            --},
-    --            mapping = {
-    --                ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-    --                ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-    --                ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    --                ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    --                ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-    --                ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
-    --                ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" })
-    --            },
-    --            sources = {
-    --                { name = "nvim_lsp", keyword_length = 1 },
-    --                { name = "buffer", keyword_length = 2 },
-    --                { name = "path" },
-    --                --{ name = "vsnip" }, -- For vsnip users.
-    --                --{ name = "luasnip" }, -- For luasnip users.
-    --                --{ name = "ultisnips" }, -- For ultisnips users.
-    --                --{ name = "snippy" }, -- For snippy users.
-    --            }
-    --        })
-    --    end
-    --},
-
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            --"hrsh7th/cmp-nvim-lsp",
-            "saghen/blink.cmp",
-            "SmiteshP/nvim-navic"
+            "saghen/blink.cmp"
         },
         keys = {
             { "<leader>l", "<cmd>LspInfo<CR>" }
         },
         config = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
-            --capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
             capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
-
-            local navic = require("nvim-navic")
-            local on_attach = function(client, bufnr)
-                if client.server_capabilities.documentSymbolProvider then
-                    navic.attach(client, bufnr)
-                end
-            end
-
             local servers = require("my").lsp_servers
-            local nvim_lsp = require("lspconfig")
+
             for _, lsp in ipairs(servers) do
-                nvim_lsp[lsp].setup({
+                local options = {
                     capabilities = capabilities,
-                    on_attach = on_attach,
                     flags = {
                         debounce_text_changes = 150
                     }
-                })
+                }
+
+                -- Usually use ruby-lsp as part of a Rails project, which spins
+                -- it up on a unix socket using socat. Connect to that here to
+                -- prevent spawning a new ruby-lsp in every nvim instance
+                if lsp == "ruby_lsp" then
+                    local project_socket = "/tmp/ruby-lsp-" .. vim.fn.system({
+                        "bash", "-c", [[echo "]] .. vim.fn.getcwd() .. [[" | md5sum | cut -c1-8 | tr -d '\n']]
+                    }) .. ".sock"
+
+                    options.cmd = { "socat", "-", "UNIX-CONNECT:" .. project_socket }
+                    options.root_markers = { "Gemfile", ".git" }
+                elseif lsp == "rubocop" then
+                    options.cmd = { "rubocop", "--lsp" }
+                    options.root_markers = { "Gemfile", ".git" }
+                end
+
+                vim.lsp.config(lsp, options)
+                vim.lsp.enable(lsp)
             end
+
+            vim.diagnostic.config({
+                virtual_text = true,
+                current_line = true
+            })
         end,
         lazy = false
-    },
-
-    {
-        "utilyre/barbecue.nvim",
-        dependencies = {
-            "SmiteshP/nvim-navic",
-            "nvim-tree/nvim-web-devicons"
-        },
-        main = "barbecue",
-        opts = {}
     },
 
     {
@@ -334,63 +332,70 @@ require("lazy").setup({
           "nvim-telescope/telescope.nvim"
       },
       keys = {
-          { "<leader>g", function() require("neogit").open() end }
+          { "<leader>g", function() require("neogit").open() end },
+          { "<leader>k", function() vim.cmd("NeogitLogCurrent") end }
+      },
+      opts = {
+          commit_view = {
+              kind = "split" -- default vsplit; split below instead of to the side
+          }
       },
       config = true
     },
 
-    {
-        "yetone/avante.nvim",
-        event = "VeryLazy",
-        lazy = false,
-        version = false,
-        opts = {
-            provider = "openai",
-            auto_suggestions_provider = "openai",
-            openai = {
-                endpoint = "https://api.deepseek.com/v1",
-                model = "deepseek-chat",
-                timeout = 30000,
-                temperature = 0.0,
-                max_tokens = 4096,
-                api_key_name = "cmd:gpg -dq /home/gig/.deepseek.gpg",
-                -- api_key_name = "OPENAI_API_KEY", -- default OPENAI_API_KEY if not set
-            },
-            windows = {
-                position = "bottom"
-            }
-        },
-        build = "make",
-        dependencies = {
-            "stevearc/dressing.nvim",
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-            "nvim-tree/nvim-web-devicons",
-            -- "zbirenbaum/copilot.lua", -- for providers='copilot'
-            {
-                "HakonHarnes/img-clip.nvim",
-                event = "VeryLazy",
-                opts = {
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        use_absolute_path = true,
-                    },
-                },
-            },
-            {
-                -- Make sure to set this up properly if you have lazy=true
-                "MeanderingProgrammer/render-markdown.nvim",
-                opts = {
-                    file_types = { "markdown", "Avante" },
-                },
-                ft = { "markdown", "Avante" },
-            },
-        },
-    },
+    --{
+    --    "yetone/avante.nvim",
+    --    event = "VeryLazy",
+    --    lazy = false,
+    --    version = false,
+    --    opts = {
+    --        provider = "openai",
+    --        auto_suggestions_provider = "openai",
+    --        providers = {
+    --            openai = {
+    --                endpoint = "https://api.deepseek.com/v1",
+    --                model = "deepseek-coder",
+    --                timeout = 30000,
+    --                max_tokens = 4096,
+    --                api_key_name = "cmd:gpg -dq /home/gig/.deepseek.gpg",
+    --                -- api_key_name = "OPENAI_API_KEY", -- default OPENAI_API_KEY if not set
+    --            }
+    --        },
+    --        windows = {
+    --            position = "bottom"
+    --        }
+    --    },
+    --    build = "make",
+    --    dependencies = {
+    --        "stevearc/dressing.nvim",
+    --        "nvim-lua/plenary.nvim",
+    --        "MunifTanjim/nui.nvim",
+    --        "nvim-tree/nvim-web-devicons",
+    --        -- "zbirenbaum/copilot.lua", -- for providers='copilot'
+    --        {
+    --            "HakonHarnes/img-clip.nvim",
+    --            event = "VeryLazy",
+    --            opts = {
+    --                default = {
+    --                    embed_image_as_base64 = false,
+    --                    prompt_for_file_name = false,
+    --                    drag_and_drop = {
+    --                        insert_mode = true,
+    --                    },
+    --                    use_absolute_path = true,
+    --                },
+    --            },
+    --        },
+    --        {
+    --            -- Make sure to set this up properly if you have lazy=true
+    --            "MeanderingProgrammer/render-markdown.nvim",
+    --            opts = {
+    --                file_types = { "markdown", "Avante" },
+    --            },
+    --            ft = { "markdown", "Avante" },
+    --        },
+    --    },
+    --},
 
     -- language stuff
     "vim-ruby/vim-ruby",
@@ -405,24 +410,23 @@ require("lazy").setup({
     "elixir-tools/elixir-tools.nvim",
     "rhysd/vim-crystal",
     "cespare/vim-toml",
-
-    --"echasnovski/mini.base16"
+    "imsnif/kdl.vim",
 })
 
 -- open vimwiki links in a new vim buffer instead of xdg-open
-vim.cmd [[
-    fun! VimwikiLinkHandler(link)
-        let link_infos = vimwiki#base#resolve_link(a:link)
-        try
-            if link_infos.filename =~ "^http"
-                exe '!$BROWSER "' . fnameescape(link_infos.filename) . '"'
-            else
-                exe "e " . fnameescape(link_infos.filename)
-            endif
-            return 1
-        catch
-            echo "Failed opening " . a:link
-            return 0
-        endtry
-    endfun
-]]
+--vim.cmd [[
+--    fun! VimwikiLinkHandler(link)
+--        let link_infos = vimwiki#base#resolve_link(a:link)
+--        try
+--            if link_infos.filename =~ "^http"
+--                exe '!$BROWSER "' . fnameescape(link_infos.filename) . '"'
+--            else
+--                exe "e " . fnameescape(link_infos.filename)
+--            endif
+--            return 1
+--        catch
+--            echo "Failed opening " . a:link
+--            return 0
+--        endtry
+--    endfun
+--]]

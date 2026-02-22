@@ -241,5 +241,11 @@ au("LspAttach", {
         remapkey("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
         remapkey("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
         remapkey("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+
+        -- Built-in autocompletion
+        --local client = vim.lsp.get_client_by_id(args.data.client_id)
+        --if client:supports_method("textDocument/completion") then
+        --  vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+        --end
     end
 })

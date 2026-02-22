@@ -2,6 +2,7 @@
 -- OPTIONS
 -----------------------------------------------------------------------------
 
+--vim.opt.background = "light"
 vim.opt.background = "dark"
 vim.opt.mouse = "a"
 vim.opt.encoding = "utf-8"
@@ -15,7 +16,7 @@ vim.opt.smarttab = false -- fuck tabs
 vim.opt.mat = 5 -- duration to show matching brace
 vim.opt.autoread = true -- reload files automatically
 vim.opt.number = true -- draw line numbers
-vim.opt.relativenumber = true -- draw relative line numbers
+--vim.opt.relativenumber = true -- draw relative line numbers
 vim.opt.swapfile = false -- disable swap files
 vim.opt.spell = false -- no spell checking
 vim.opt.undolevels = 150 -- only undo up to 150 times
@@ -72,7 +73,7 @@ vim.opt.scrolloff = 8 -- start scrolling at 8 lines away from margins
 vim.opt.sidescrolloff = 15
 vim.opt.sidescroll = 1
 vim.opt.cursorline = true
-vim.opt.omnifunc = "syntaxcomplete#Complete"
 vim.opt.laststatus = 2 -- always show statusline
+vim.opt.omnifunc = "syntaxcomplete#Complete"
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.listchars:append({ trail = "·", precedes = "«", extends = "»", eol = "↲", tab = "▸\\ " })

@@ -13,6 +13,7 @@ local M = {}
 
 M.lsp_servers = {
     "ruby_lsp",
+    --"rubocop",
     "gopls",
     "rust_analyzer",
     "bashls",
